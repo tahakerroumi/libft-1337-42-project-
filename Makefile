@@ -3,20 +3,20 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: zelkalai <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: tkerroum <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/11/04 13:02:54 by zelkalai          #+#    #+#              #
-#    Updated: 2023/11/27 18:40:06 by tkerroum         ###   ########.fr        #
+#    Created: 2023/11/29 00:21:14 by tkerroum          #+#    #+#              #
+#    Updated: 2023/11/29 14:20:14 by tkerroum         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
-CC = cc
+CC = cc 
 CFLAGS = -Wall -Wextra -Werror 
 AR = ar rc
 RM = rm -f
 
-SRC = 	ft_isalpha.c\
+SRC = ft_isalpha.c\
 	ft_isdigit.c\
 	ft_isalnum.c\
 	ft_isprint.c\
@@ -49,24 +49,25 @@ SRC = 	ft_isalpha.c\
 	ft_putchar_fd.c\
 	ft_putstr_fd.c\
 	ft_putendl_fd.c\
-	ft_putnbr_fd.c\
+	ft_putnbr_fd.c
 
 OBJ = $(SRC:.c=.o)
-
+OBG_BNS = $(BNS:.c=.o)
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	$(AR) $(NAME) $(OBJ)
+$(NAME): $(OBJ) $(OBG_BNS)
+#	$(AR) $(NAME) $(OBJ)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
+	$(AR) $(NAME) $@
 
 clean:
-	$(RM) $(OBJ) 
+	$(RM) $(OBJ)
 
 fclean: clean
 	$(RM) $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+#.PHONY: all clean fclean re

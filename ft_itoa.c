@@ -13,7 +13,6 @@
 #include "libft.h"
 
 static	char	*ktebakhaydiali(char *p, long num, size_t len)
-
 {
 	if (num == 0)
 	{
