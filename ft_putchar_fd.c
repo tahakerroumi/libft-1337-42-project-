@@ -16,3 +16,12 @@ void	ft_putchar_fd(char c, int fd)
 {
 	write(fd, &c, 1);
 }
+// int main()
+// {
+// 	int fd = open ("text.txt",O_CREAT | O_RDWR , 0777);
+// 	if (fd < 0)
+// 	{
+// 		printf("mochkila");
+// 	}
+// 	ft_putchar_fd('5',fd);
+// }  

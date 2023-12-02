@@ -24,10 +24,3 @@ void	*ft_memset(void *s, int c, size_t n)
 	}
 	return (s);
 }
-// int main ()
-//{
-//   char tab[10];
-// printf("%p",ft_memset(tab, 0, 0));
-// printf("%p \n",memset(tab, 0, 0));
-
-//}

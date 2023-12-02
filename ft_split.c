@@ -12,93 +12,91 @@
 
 #include "libft.h"
 
-size_t	ft_count_words(const char *s, char c)
+static char	**free_if_error(char **ptr, int index)
 {
-	size_t	count;
-	size_t	in_word;
+	int	i;
 
-	count = 0;
-	in_word = 0;
-	while (*s)
+	i = 0;
+	while (i < index)
 	{
-		if (*s != c && in_word == 0)
+		free(ptr[i]);
+		i++;
+	}
+	free(ptr);
+	return (NULL);
+}
+
+static int	count_strs(char const *str, char c)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (str && str[i])
+	{
+		if (str[i] == c)
 		{
-			in_word = 1;
-			count++;
+			while (str[i] && str[i] == c)
+				i++;
 		}
-		else if (*s == c)
-			in_word = 0;
-		s++;
+		else
+		{
+			count++;
+			while (str[i] && str[i] != c)
+				i++;
+		}
 	}
 	return (count);
 }
 
-void	find_next_word(const char *s, size_t *start, char c, size_t *end)
-{
-	while (s[*start] && s[*start] == c)
-		(*start)++;
-	*end = *start;
-	while (s[*end] && s[*end] != c)
-		(*end)++;
-}
-
-char	*allocate_and_copy_word(const char *s, size_t start, size_t end)
+static size_t	get_strs_size(char const *str, char c)
 {
 	size_t	i;
-	char	*word;
 
 	i = 0;
-	word = (char *)malloc(sizeof(char) * (end - start + 1));
-	if (!word)
-		return (NULL);
-	while (i < end - start)
-	{
-		word[i] = s[start + i];
+	while (str && str[i] && str[i] != c)
 		i++;
-	}
-	word[i] = '\0';
-	return (word);
+	return (i);
 }
 
-char	**allocate_words(char const *s, char c, char **array, size_t word_count)
+static char	**start_spliting(char **res, char const *s, char c)
 {
-	size_t	i;
-	size_t	j;
-	size_t	end;
+	int		s_index;
+	int		i;
+	size_t	str_size;
+	char	*str;
 
 	i = 0;
-	j = 0;
-	while (s[i] && j < word_count)
+	s_index = 0;
+	while (s && s[i])
 	{
-		find_next_word(s, &i, c, &end);
-		if (s[i])
+		str_size = get_strs_size(s + i, c);
+		if (!str_size)
+			i++;
+		else
 		{
-			array[j] = allocate_and_copy_word(s, i, end);
-			if (!array[j])
-			{
-				while (j + 1)
-					free(array[j--]);
-				free(array);
-				return (0);
-			}
-			j++;
-			i = end;
+			str = malloc(str_size + 1);
+			if (!str)
+				return (free_if_error(res, s_index));
+			ft_strlcpy(str, s + i, str_size + 1);
+			res[s_index] = str;
+			s_index++;
+			i += str_size;
 		}
 	}
-	array[j] = NULL;
-	return (array);
+	res[s_index] = 0;
+	return (res);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	size_t	word_count;
-	char	**array;
+	char	**res;
 
 	if (!s)
 		return (NULL);
-	word_count = ft_count_words(s, c);
-	array = (char **)malloc(sizeof(char *) * (word_count + 1));
-	if (!array)
+	res = malloc(sizeof(char **) * (count_strs(s, c) + 1));
+	if (!res)
 		return (NULL);
-	return (allocate_words(s, c, array, word_count));
+	return (start_spliting(res, s, c));
 }
