@@ -6,7 +6,7 @@
 /*   By: tkerroum <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 20:17:24 by tkerroum          #+#    #+#             */
-/*   Updated: 2023/11/20 20:17:27 by tkerroum         ###   ########.fr       */
+/*   Updated: 2023/12/04 12:02:29 by tkerroum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 		return ;
 	while (s[i])
 	{
-		if(f)
+		if (f)
 			f(i, &s[i]);
 		i++;
 	}
