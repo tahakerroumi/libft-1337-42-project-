@@ -76,7 +76,7 @@ static char	**start_spliting(char **res, char const *s, char c)
 			i++;
 		else
 		{
-			str = malloc(str_size + 1);
+			str = malloc(sizeof(char) * (str_size + 1));
 			if (!str)
 				return (free_if_error(res, s_index));
 			ft_strlcpy(str, s + i, str_size + 1);
@@ -95,7 +95,7 @@ char	**ft_split(char const *s, char c)
 
 	if (!s)
 		return (NULL);
-	res = malloc(sizeof(char **) * (count_strs(s, c) + 1));
+	res = malloc(sizeof(char *) * (count_strs(s, c) + 1));
 	if (!res)
 		return (NULL);
 	return (start_spliting(res, s, c));
